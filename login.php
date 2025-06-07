@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Data login disimpan langsung di sini
+// Data login beserta role
 $users = [
-    'admin' => '12345',
-    'user'  => 'abcde'
+    'admin' => ['password' => '12345', 'role' => 'admin'],
+    'user'  => ['password' => 'abcde', 'role' => 'user']
 ];
 
 $error = "";
@@ -13,9 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (isset($users[$username]) && $users[$username] === $password) {
+    // Cek kredensial dan role
+    if (isset($users[$username]) && $users[$username]['password'] === $password) {
         $_SESSION['user'] = $username;
-        header("Location: dashboard.php");
+        $_SESSION['role'] = $users[$username]['role'];
+
+        // Arahkan ke dashboard sesuai role
+        if ($_SESSION['role'] === 'admin') {
+            header("Location: dashboard_admin.php");
+        } else {
+            header("Location: dashboard_user.php");
+        }
         exit;
     } else {
         $error = "Username atau password salah!";
