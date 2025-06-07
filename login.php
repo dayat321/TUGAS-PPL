@@ -11,22 +11,22 @@ $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
+    $level = $_POST['level'];
     $password = $_POST['password'];
 
-    // Cek kredensial dan role
-    if (isset($users[$username]) && $users[$username]['password'] === $password) {
+    // Validasi login berdasarkan username, level, dan password
+    if (isset($users[$username]) && $users[$username]['password'] === $password && $users[$username]['role'] === $level) {
         $_SESSION['user'] = $username;
-        $_SESSION['role'] = $users[$username]['role'];
+        $_SESSION['role'] = $level;
 
-        // Arahkan ke dashboard sesuai role
-        if ($_SESSION['role'] === 'admin') {
+        if ($level === 'admin') {
             header("Location: dashboard_admin.php");
         } else {
             header("Location: dashboard_user.php");
         }
         exit;
     } else {
-        $error = "Username atau password salah!";
+        $error = "Username, level, atau password salah!";
     }
 }
 ?>
@@ -52,11 +52,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="username" class="form-control" required autofocus>
             </div>
             <div class="mb-3">
+                <label>Level</label>
+                <select name="level" class="form-control" required>
+                    <option value="">-- Pilih Level --</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label>Password</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
             <button class="btn btn-primary w-100">Login</button>
         </form>
+        <!-- Tambahan bawah -->
+        <p class="text-center mt-3 text-muted">© 2025 - PERGURUAN GETAK MUMBUL</p>
     </div>
 </div>
 </body>
