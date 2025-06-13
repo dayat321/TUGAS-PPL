@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($level === 'admin') {
             header("Location: dashboard_admin.php");
         } else {
-            header("Location: dashboard_user.php");
+            header("Location: user/dashboard_user.php");
         }
         exit;
     } else {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 25rem;">
+    <div class="card shadow p-4" style="inline-size: 25rem;">
         <h4 class="text-center mb-4">Login</h4>
         <?php if ($error): ?>
             <div class="alert alert-danger"><?= $error ?></div>
