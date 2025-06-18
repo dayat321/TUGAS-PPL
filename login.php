@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $level;
 
         if ($level === 'admin') {
-            header("Location: dashboard_admin.php");
+            header("Location: admin/dashboard_admin.php");
         } else {
             header("Location: user/dashboard_user.php");
         }
